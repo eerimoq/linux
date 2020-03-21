@@ -14,8 +14,6 @@
         bootargs = "console=ttymxc1,115200 ";
         linux,initrd-start = <0x00000000>;
         linux,initrd-end = <0x00000000>;
-        device-uuid = "00000000-0000-0000-0000-000000000000";
-        active-system = "?";
         stdout-path = &uart2;
         };
 
