@@ -55,7 +55,7 @@
     clock-frequency = <528000000>;
         arm-supply = <&reg_arm>;
         soc-supply = <&reg_soc>;
-        vcc-supply = <&reg_cpu>;
+        /* vcc-supply = <&reg_cpu>; */
 };
 
 &i2c1 {
@@ -65,15 +65,13 @@
         status = "okay";
 };
 
-
 &i2c2 {
         clock_frequency = <100000>;
         pinctrl-names = "default";
         pinctrl-0 = <&pinctrl_i2c2>;
         status = "okay";
 
-
-    reg_cpu: regulator@48 {
+/*    reg_cpu: regulator@48 {
         compatible = "fcs,fan53555";
         regulator-name = "fan53555";
         reg = <0x48>;
@@ -83,9 +81,15 @@
         regulator-ramp-delay = <1000>;
         regulator-always-on;
     };
-
+*/
 };
 
+&i2c3 {
+	clock_frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c3>;
+	status = "okay";
+};
 
 &fec1 {
         pinctrl-names = "default";
@@ -112,13 +116,6 @@
 
 
 &snvs_poweroff {
-        status = "okay";
-};
-
-&uart1 {
-        pinctrl-names = "default";
-        pinctrl-0 = <&pinctrl_uart1>;
-        uart-has-rtscts;
         status = "okay";
 };
 
@@ -440,7 +437,6 @@
                 >;
         };
 
-
         pinctrl_i2c1: i2c1grp {
                 fsl,pins = <
                         MX6UL_PAD_CSI_PIXCLK__I2C1_SCL 0x4001b8b0
@@ -455,15 +451,12 @@
                 >;
         };
 
-
-        pinctrl_uart1: uart1grp {
-                fsl,pins = <
-                        MX6UL_PAD_UART1_TX_DATA__UART1_DCE_TX 0x1b0b1
-                        MX6UL_PAD_UART1_RX_DATA__UART1_DCE_RX 0x1b0b1
-                        MX6UL_PAD_UART1_CTS_B__UART1_DCE_CTS 0x1b0b1
-                        MX6UL_PAD_UART1_RTS_B__UART1_DCE_RTS 0x1b0b1
-                >;
-        };
+	pinctrl_i2c3: i2c3grp {
+		fsl,pins = <
+			MX6UL_PAD_UART1_TX_DATA__I2C3_SCL	0x4001b8b0
+			MX6UL_PAD_UART1_RX_DATA__I2C3_SDA	0x4001b8b0
+			>;
+	};
 
         pinctrl_uart2: uart2grp {
                 fsl,pins = <
