@@ -488,7 +488,7 @@ int dev_ioctl(struct net *net, unsigned int cmd, void __user *arg)
 	case SIOCETHTOOL:
 		dev_load(net, ifr.ifr_name);
 		rtnl_lock();
-		ret = dev_ethtool(net, &ifr);
+		ret = -ENOSYS;
 		rtnl_unlock();
 		if (!ret) {
 			if (colon)

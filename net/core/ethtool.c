@@ -128,6 +128,8 @@ phy_tunable_strings[__ETHTOOL_PHY_TUNABLE_COUNT][ETH_GSTRING_LEN] = {
 	[ETHTOOL_PHY_DOWNSHIFT]	= "phy-downshift",
 };
 
+#if 0
+
 static int ethtool_get_features(struct net_device *dev, void __user *useraddr)
 {
 	struct ethtool_gfeatures cmd = {
@@ -403,6 +405,8 @@ static int __ethtool_set_flags(struct net_device *dev, u32 data)
 	return 0;
 }
 
+#endif
+
 void ethtool_convert_legacy_u32_to_link_mode(unsigned long *dst,
 					     u32 legacy_u32)
 {
@@ -483,6 +487,8 @@ convert_legacy_settings_to_link_ksettings(
 	return retval;
 }
 
+#if 0
+
 /* return false if ksettings link modes had higher bits
  * set. legacy_settings always updated (best effort)
  */
@@ -528,6 +534,8 @@ convert_link_ksettings_to_legacy_settings(
 		= link_ksettings->base.transceiver;
 	return retval;
 }
+
+#endif
 
 /* number of 32-bit words to store the user's link mode bitmaps */
 #define __ETHTOOL_LINK_MODE_MASK_NU32			\
@@ -586,6 +594,8 @@ int __ethtool_get_link_ksettings(struct net_device *dev,
 	return err;
 }
 EXPORT_SYMBOL(__ethtool_get_link_ksettings);
+
+#if 0
 
 /* convert ethtool_link_usettings in user space to a kernel internal
  * ethtool_link_ksettings. return 0 on success, errno on error.
@@ -1060,6 +1070,8 @@ static int ethtool_copy_validate_indir(u32 *indir, void __user *useraddr,
 	return 0;
 }
 
+#endif
+
 u8 netdev_rss_key[NETDEV_RSS_KEY_LEN] __read_mostly;
 
 void netdev_rss_key_fill(void *buffer, size_t len)
@@ -1069,6 +1081,8 @@ void netdev_rss_key_fill(void *buffer, size_t len)
 	memcpy(buffer, netdev_rss_key, len);
 }
 EXPORT_SYMBOL(netdev_rss_key_fill);
+
+#if 0
 
 static int ethtool_get_max_rxfh_channel(struct net_device *dev, u32 *max)
 {
@@ -2819,3 +2833,5 @@ int dev_ethtool(struct net *net, struct ifreq *ifr)
 
 	return rc;
 }
+
+#endif
