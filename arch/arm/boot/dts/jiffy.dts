@@ -1,40 +1,9 @@
-# 1 "arch/arm/boot/dts/jiffy.dts"
-# 1 "<built-in>"
-# 1 "<command-line>"
-# 1 "arch/arm/boot/dts/jiffy.dts"
-
-
-
 
 /dts-v1/;
-
-# 1 "arch/arm/boot/dts/imx6ul.dtsi" 1
-# 9 "arch/arm/boot/dts/imx6ul.dtsi"
-# 1 "./scripts/dtc/include-prefixes/dt-bindings/clock/imx6ul-clock.h" 1
-# 10 "arch/arm/boot/dts/imx6ul.dtsi" 2
-# 1 "./scripts/dtc/include-prefixes/dt-bindings/gpio/gpio.h" 1
-# 11 "arch/arm/boot/dts/imx6ul.dtsi" 2
-# 1 "./scripts/dtc/include-prefixes/dt-bindings/input/input.h" 1
-# 13 "./scripts/dtc/include-prefixes/dt-bindings/input/input.h"
-# 1 "./scripts/dtc/include-prefixes/dt-bindings/input/linux-event-codes.h" 1
-# 14 "./scripts/dtc/include-prefixes/dt-bindings/input/input.h" 2
-# 12 "arch/arm/boot/dts/imx6ul.dtsi" 2
-# 1 "./scripts/dtc/include-prefixes/dt-bindings/interrupt-controller/arm-gic.h" 1
-# 9 "./scripts/dtc/include-prefixes/dt-bindings/interrupt-controller/arm-gic.h"
-# 1 "./scripts/dtc/include-prefixes/dt-bindings/interrupt-controller/irq.h" 1
-# 10 "./scripts/dtc/include-prefixes/dt-bindings/interrupt-controller/arm-gic.h" 2
-# 13 "arch/arm/boot/dts/imx6ul.dtsi" 2
-# 1 "arch/arm/boot/dts/imx6ul-pinfunc.h" 1
-# 14 "arch/arm/boot/dts/imx6ul.dtsi" 2
 
 / {
  #address-cells = <1>;
  #size-cells = <1>;
-
-
-
-
-
 
  chosen {};
  memory { device_type = "memory"; reg = <0 0>; };
@@ -42,9 +11,6 @@
  aliases {
   ethernet0 = &fec1;
   gpio0 = &gpio1;
-  gpio2 = &gpio3;
-  gpio3 = &gpio4;
-  gpio4 = &gpio5;
   mmc0 = &usdhc1;
   serial1 = &uart2;
  };
@@ -227,42 +193,6 @@
            <&iomuxc 16 33 16>;
    };
 
-   gpio3: gpio@020a4000 {
-    compatible = "fsl,imx6ul-gpio", "fsl,imx35-gpio";
-    reg = <0x020a4000 0x4000>;
-    interrupts = <0 70 4>,
-          <0 71 4>;
-    gpio-controller;
-    #gpio-cells = <2>;
-    interrupt-controller;
-    #interrupt-cells = <2>;
-    gpio-ranges = <&iomuxc 0 65 29>;
-   };
-
-   gpio4: gpio@020a8000 {
-    compatible = "fsl,imx6ul-gpio", "fsl,imx35-gpio";
-    reg = <0x020a8000 0x4000>;
-    interrupts = <0 72 4>,
-          <0 73 4>;
-    gpio-controller;
-    #gpio-cells = <2>;
-    interrupt-controller;
-    #interrupt-cells = <2>;
-    gpio-ranges = <&iomuxc 0 94 17>, <&iomuxc 17 117 12>;
-   };
-
-   gpio5: gpio@020ac000 {
-    compatible = "fsl,imx6ul-gpio", "fsl,imx35-gpio";
-    reg = <0x020ac000 0x4000>;
-    interrupts = <0 74 4>,
-          <0 75 4>;
-    gpio-controller;
-    #gpio-cells = <2>;
-    interrupt-controller;
-    #interrupt-cells = <2>;
-    gpio-ranges = <&iomuxc 0 7 10>, <&iomuxc 10 5 2>;
-   };
-
    kpp: kpp@020b8000 {
     compatible = "fsl,imx6ul-kpp", "fsl,imx6q-kpp", "fsl,imx21-kpp";
     reg = <0x020b8000 0x4000>;
@@ -276,14 +206,6 @@
     reg = <0x020bc000 0x4000>;
     interrupts = <0 80 4>;
     clocks = <&clks 208>;
-   };
-
-   wdog2: wdog@020c0000 {
-    compatible = "fsl,imx6ul-wdt", "fsl,imx21-wdt";
-    reg = <0x020c0000 0x4000>;
-    interrupts = <0 81 4>;
-    clocks = <&clks 209>;
-    status = "disabled";
    };
 
    clks: ccm@020c4000 {
@@ -350,36 +272,6 @@
      anatop-min-bit-val = <1>;
      anatop-min-voltage = <725000>;
      anatop-max-voltage = <1450000>;
-    };
-   };
-
-   snvs: snvs@020cc000 {
-    compatible = "fsl,sec-v4.0-mon", "syscon", "simple-mfd";
-    reg = <0x020cc000 0x4000>;
-
-    snvs_rtc: snvs-rtc-lp {
-     compatible = "fsl,sec-v4.0-mon-rtc-lp";
-     regmap = <&snvs>;
-     offset = <0x34>;
-     interrupts = <0 19 4>,
-           <0 20 4>;
-    };
-
-    snvs_poweroff: snvs-poweroff {
-     compatible = "syscon-poweroff";
-     regmap = <&snvs>;
-     offset = <0x38>;
-     value = <0x60>;
-     mask = <0x60>;
-     status = "disabled";
-    };
-
-    snvs_pwrkey: snvs-powerkey {
-     compatible = "fsl,sec-v4.0-pwrkey";
-     regmap = <&snvs>;
-     interrupts = <0 4 4>;
-     linux,keycode = <116>;
-     wakeup-source;
     };
    };
 
@@ -479,51 +371,9 @@
     status = "disabled";
    };
 
-   adc1: adc@02198000 {
-    compatible = "fsl,imx6ul-adc", "fsl,vf610-adc";
-    reg = <0x02198000 0x4000>;
-    interrupts = <0 100 4>;
-    clocks = <&clks 123>;
-    num-channels = <2>;
-    clock-names = "adc";
-    fsl,adck-max-frequency = <30000000>, <40000000>,
-        <20000000>;
-    status = "disabled";
-   };
-
    mmdc: mmdc@021b0000 {
     compatible = "fsl,imx6ul-mmdc", "fsl,imx6q-mmdc";
     reg = <0x021b0000 0x4000>;
-   };
-
-   ocotp: ocotp-ctrl@021bc000 {
-    compatible = "fsl,imx6ul-ocotp", "syscon";
-    reg = <0x021bc000 0x4000>;
-    clocks = <&clks 165>;
-   };
-
-   lcdif: lcdif@021c8000 {
-    compatible = "fsl,imx6ul-lcdif", "fsl,imx28-lcdif";
-    reg = <0x021c8000 0x4000>;
-    interrupts = <0 5 4>;
-    clocks = <&clks 162>,
-      <&clks 161>,
-      <&clks 0>;
-    clock-names = "pix", "axi", "disp_axi";
-    status = "disabled";
-   };
-
-   qspi: qspi@021e0000 {
-    #address-cells = <1>;
-    #size-cells = <0>;
-    compatible = "fsl,imx6ul-qspi", "fsl,imx6sx-qspi";
-    reg = <0x021e0000 0x4000>, <0x60000000 0x10000000>;
-    reg-names = "QuadSPI", "QuadSPI-memory";
-    interrupts = <0 107 4>;
-    clocks = <&clks 176>,
-      <&clks 176>;
-    clock-names = "qspi_en", "qspi";
-    status = "disabled";
    };
 
    uart2: serial@021e8000 {
@@ -539,17 +389,16 @@
   };
  };
 };
-# 8 "arch/arm/boot/dts/jiffy.dts" 2
 
 / {
         model = "Jiffy";
         compatible = "fsl,imx6ul-14x14-evk", "fsl,imx6ul";
 
         chosen {
-        bootargs = "console=ttymxc1,115200 ";
-        linux,initrd-start = <0x83f00000>;
-        linux,initrd-end = <0x84071a00>;
-        stdout-path = &uart2;
+            bootargs = "console=ttymxc1,115200 ";
+            linux,initrd-start = <0x83f00000>;
+            linux,initrd-end = <0x84071a00>;
+            stdout-path = &uart2;
         };
 
         memory {
@@ -560,20 +409,7 @@
                 compatible = "simple-bus";
                 #address-cells = <1>;
                 #size-cells = <0>;
-
-
         };
-
-        onewire {
-                compatible = "w1-gpio";
-                gpios = <&gpio1 4 0>;
-        };
-};
-
-&adc1 {
-
-
-        status = "okay";
 };
 
 &clks {
@@ -582,9 +418,7 @@
 };
 
 &cpu0 {
-
         vcc-operating-points = <
-
                 696000 1400000
                 528000 1300000
                 396000 1300000
@@ -597,31 +431,24 @@
 };
 
 &fec1 {
-        pinctrl-names = "default";
-        pinctrl-0 = <&pinctrl_enet1>;
-        phy-mode = "rmii";
-        phy-handle = <&ethphy0>;
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_enet1>;
+    phy-mode = "rmii";
+    phy-handle = <&ethphy0>;
     phy-reset-gpios = <&gpio1 22 1>;
     phy-reset-duration = <1>;
     phy-reset-post-delay = <1>;
-        status = "okay";
+    status = "okay";
     mac-address = [5e fd f9 ca b5 3e];
-        mdio {
-                #address-cells = <1>;
-                #size-cells = <0>;
+    mdio {
+            #address-cells = <1>;
+            #size-cells = <0>;
 
-                ethphy0: ethernet-phy@1 {
-                        reg = <1>;
-            status = "okay";
-                };
-
-        };
-
-};
-
-
-&snvs_poweroff {
-        status = "okay";
+            ethphy0: ethernet-phy@1 {
+              reg = <1>;
+              status = "okay";
+            };
+    };
 };
 
 &uart2 {
@@ -639,229 +466,6 @@
         keep-power-in-suspend;
         status = "okay";
 };
-
-&gpio1 {
-        unused_pins_gpio1_5 {
-                gpio-hog;
-                gpios = <5 0>;
-                output-low;
-                line-name = "unused_1_5";
-        };
-        unused_pins_gpio1_23 {
-                gpio-hog;
-                gpios = <23 0>;
-                output-low;
-                line-name = "unused_1_23";
-        };
-        unused_pins_gpio1_31 {
-                gpio-hog;
-                gpios = <31 0>;
-                output-low;
-                line-name = "unused_1_31";
-        };
-        unused_pins_gpio1_27 {
-                gpio-hog;
-                gpios = <27 0>;
-                output-low;
-                line-name = "unused_1_27";
-        };
-
-        unused_pins_gpio1_26 {
-                gpio-hog;
-                gpios = <26 0>;
-                output-low;
-                line-name = "unused_1_26";
-        };
-
-
-};
-
-&gpio3 {
-
-        unused_pins_gpio3_20 {
-                gpio-hog;
-                gpios = <20 0>;
-                output-low;
-                line-name = "unused_3_20";
-        };
-
-        unused_pins_gpio3_21 {
-                gpio-hog;
-                gpios = <21 0>;
-                output-low;
-                line-name = "unused_3_21";
-        };
-
-        unused_pins_gpio3_22 {
-                gpio-hog;
-                gpios = <22 0>;
-                output-low;
-                line-name = "unused_3_22";
-        };
-
-        unused_pins_gpio3_23 {
-                gpio-hog;
-                gpios = <23 0>;
-                output-low;
-                line-name = "unused_3_23";
-        };
-
-        unused_pins_gpio3_24 {
-                gpio-hog;
-                gpios = <24 0>;
-                output-low;
-                line-name = "unused_3_24";
-        };
-
-        unused_pins_gpio3_0 {
-                gpio-hog;
-                gpios = <0 0>;
-                output-low;
-                line-name = "unused_3_0";
-        };
-
-        unused_pins_gpio3_1 {
-                gpio-hog;
-                gpios = <1 0>;
-                output-low;
-                line-name = "unused_3_1";
-        };
-
-        unused_pins_gpio3_4 {
-                gpio-hog;
-                gpios = <4 0>;
-                output-low;
-                line-name = "unused_3_4";
-        };
-
-
-};
-
-&gpio4 {
-        chr_en {
-                gpio-hog;
-                gpios = <21 0>;
-                output-high;
-                line-name = "chr_en";
-        };
-
-
-        unused_pins_gpio4_8 {
-                gpio-hog;
-                gpios = <8 0>;
-                output-low;
-                line-name = "unused_4_8";
-        };
-
-        unused_pins_gpio4_28 {
-                gpio-hog;
-                gpios = <28 0>;
-                output-low;
-                line-name = "unused_4_28";
-        };
-
-
-
-        unused_pins_gpio4_16 {
-                gpio-hog;
-                gpios = <16 0>;
-                output-low;
-                line-name = "unused_4_16";
-        };
-
-
-        unused_pins_gpio4_10 {
-                gpio-hog;
-                gpios = <10 0>;
-                output-low;
-                line-name = "unused_4_10";
-        };
-
-
-        unused_pins_gpio4_0 {
-                gpio-hog;
-                gpios = <0 0>;
-                output-low;
-                line-name = "unused_4_0";
-        };
-
-
-
-};
-
-&gpio5 {
-        unused_pins_gpio5_1 {
-                gpio-hog;
-                gpios = <1 0>;
-                output-low;
-                line-name = "unused_5_1";
-        };
-
-        unused_pins_gpio5_2 {
-                gpio-hog;
-                gpios = <2 0>;
-                output-low;
-                line-name = "unused_5_2";
-        };
-
-
-        unused_pins_gpio5_3 {
-                gpio-hog;
-                gpios = <3 0>;
-                output-low;
-                line-name = "unused_5_3";
-        };
-
-
-        unused_pins_gpio5_4 {
-                gpio-hog;
-                gpios = <4 0>;
-                output-low;
-                line-name = "unused_5_4";
-        };
-
-
-        unused_pins_gpio5_5 {
-                gpio-hog;
-                gpios = <5 0>;
-                output-low;
-                line-name = "unused_5_5";
-        };
-
-
-        unused_pins_gpio5_6 {
-                gpio-hog;
-                gpios = <6 0>;
-                output-low;
-                line-name = "unused_5_6";
-        };
-
-
-        unused_pins_gpio5_7 {
-                gpio-hog;
-                gpios = <7 0>;
-                output-low;
-                line-name = "unused_5_7";
-        };
-
-
-        unused_pins_gpio5_8 {
-                gpio-hog;
-                gpios = <8 0>;
-                output-low;
-                line-name = "unused_5_8";
-        };
-
-
-        unused_pins_gpio5_9 {
-                gpio-hog;
-                gpios = <9 0>;
-                output-low;
-                line-name = "unused_5_9";
-        };
-
-};
-
 
 &wdog1 {
         status = "okay";
@@ -887,8 +491,8 @@
 
         pinctrl_uart2: uart2grp {
                 fsl,pins = <
-                        0x0094 0x0320 0x0000 0 0 0x1b0b1
-                        0x0098 0x0324 0x062c 0 1 0x1b0b1
+                      0x0094 0x0320 0x0000 0 0 0x1b0b1
+                      0x0098 0x0324 0x062c 0 1 0x1b0b1
                 >;
         };
 
@@ -906,58 +510,4 @@
                         0x01b4 0x0440 0x0000 1 0 0x170f9
                 >;
         };
-
-        pinctrl_gpio: gpio_hog {
-                fsl,pins = <
-                        0x0144 0x03d0 0x0000 5 0 0x17059
-                        0x0068 0x02f4 0x0000 5 0 0x17059
-                        0x0180 0x040c 0x0000 5 0 0x17059
-                        0x0184 0x0410 0x0000 5 0 0x17059
-                        0x0188 0x0414 0x0000 5 0 0x17059
-                        0x018c 0x0418 0x0000 5 0 0x17059
-                        0x0190 0x041c 0x0000 5 0 0x17059
-                        0x0194 0x0420 0x0000 5 0 0x17059
-                        0x01e4 0x0470 0x0000 5 0 0x17059
-                        0x0148 0x03d4 0x0000 5 0 0x17059
-                        0x014c 0x03d8 0x0000 5 0 0x17059
-                        0x0150 0x03dc 0x0000 5 0 0x17059
-                        0x01f4 0x0480 0x0000 5 0 0x17059
-                        0x019c 0x0428 0x0000 5 0 0x17059
-                >;
-        };
-
-
-        pinctrl_unused: gpio_hog_unused {
-                fsl,pins = <
-                        0x0070 0x02fc 0x0000 5 0 0x17059
-                        0x0198 0x0424 0x0000 5 0 0x17059
-                        0x01b8 0x0444 0x0000 5 0 0x17059
-                        0x01a0 0x042c 0x0000 5 0 0x17059
-                        0x0178 0x0404 0x0000 5 0 0x17059
-                        0x0020 0x02ac 0x0000 5 0 0x17059
-                        0x0024 0x02b0 0x0000 5 0 0x17059
-                        0x0028 0x02b4 0x0000 5 0 0x17059
-                        0x002c 0x02b8 0x0000 5 0 0x17059
-                        0x0030 0x02bc 0x0000 5 0 0x17059
-                        0x0034 0x02c0 0x0000 5 0 0x17059
-                        0x0038 0x02c4 0x0000 5 0 0x17059
-                        0x003c 0x02c8 0x0000 5 0 0x17059
-                        0x0040 0x02cc 0x0000 5 0 0x17059
-
-                        0x00a0 0x032c 0x0000 5 0 0x17059
-                        0x0200 0x048c 0x0000 5 0 0x17059
-                        0x00c0 0x034c 0x0000 5 0 0x17059
-                        0x00b0 0x033c 0x0000 5 0 0x17059
-                        0x0154 0x03e0 0x0000 5 0 0x17059
-                        0x0158 0x03e4 0x0000 5 0 0x17059
-                        0x015c 0x03e8 0x0000 5 0 0x17059
-                        0x0160 0x03ec 0x0000 5 0 0x17059
-                        0x0164 0x03f0 0x0000 5 0 0x17059
-                        0x0104 0x0390 0x0000 5 0 0x17059
-                        0x0108 0x0394 0x0000 5 0 0x17059
-                        0x0114 0x03a0 0x0000 5 0 0x17059
-
-                        >;
-        };
-
 };
