@@ -671,7 +671,7 @@ static unsigned int esdhc_pltfm_get_min_clock(struct sdhci_host *host)
 {
 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
 
-	return pltfm_host->clock / 256 / 16;
+	return 52000000; //pltfm_host->clock / 256 / 16;
 }
 
 static inline void esdhc_pltfm_set_clock(struct sdhci_host *host,
@@ -684,6 +684,7 @@ static inline void esdhc_pltfm_set_clock(struct sdhci_host *host,
 	int pre_div = 1;
 	int div = 1;
 	u32 temp, val;
+        unsigned int actual_clock;
 
 	if (clock == 0) {
 		host->mmc->actual_clock = 0;
@@ -710,11 +711,6 @@ static inline void esdhc_pltfm_set_clock(struct sdhci_host *host,
 			pre_div = 2;
 	}
 
-	temp = sdhci_readl(host, ESDHC_SYSTEM_CONTROL);
-	temp &= ~(ESDHC_CLOCK_IPGEN | ESDHC_CLOCK_HCKEN | ESDHC_CLOCK_PEREN
-		| ESDHC_CLOCK_MASK);
-	sdhci_writel(host, temp, ESDHC_SYSTEM_CONTROL);
-
 	while (host_clock / (16 * pre_div * ddr_pre_div) > clock &&
 			pre_div < 256)
 		pre_div *= 2;
@@ -722,9 +718,19 @@ static inline void esdhc_pltfm_set_clock(struct sdhci_host *host,
 	while (host_clock / (div * pre_div * ddr_pre_div) > clock && div < 16)
 		div++;
 
-	host->mmc->actual_clock = host_clock / (div * pre_div * ddr_pre_div);
-	dev_dbg(mmc_dev(host->mmc), "desired SD clock: %d, actual: %d\n",
-		clock, host->mmc->actual_clock);
+	actual_clock = host_clock / (div * pre_div * ddr_pre_div);
+	dev_dbg(mmc_dev(host->mmc), "desired SD clock: %d, actual: %d, new: %d\n",
+                  clock, host->mmc->actual_clock, actual_clock);
+
+        if (actual_clock == host->mmc->actual_clock)
+            return;
+
+        host->mmc->actual_clock = actual_clock;
+
+	temp = sdhci_readl(host, ESDHC_SYSTEM_CONTROL);
+	temp &= ~(ESDHC_CLOCK_IPGEN | ESDHC_CLOCK_HCKEN | ESDHC_CLOCK_PEREN
+		| ESDHC_CLOCK_MASK);
+	sdhci_writel(host, temp, ESDHC_SYSTEM_CONTROL);
 
 	pre_div >>= 1;
 	div--;
