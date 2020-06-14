@@ -436,7 +436,7 @@
     phy-mode = "rmii";
     phy-handle = <&ethphy0>;
     phy-reset-gpios = <&gpio1 22 1>;
-    phy-reset-duration = <1>;
+    phy-reset-duration = <10>;
     phy-reset-post-delay = <1>;
     status = "okay";
     mac-address = [5e fd f9 ca b5 3e];
@@ -465,6 +465,8 @@
         non-removable;
         keep-power-in-suspend;
         status = "okay";
+        no-sdio;
+        no-sd;
 };
 
 &wdog1 {

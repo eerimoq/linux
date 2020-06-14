@@ -1636,19 +1636,19 @@ void mmc_power_up(struct mmc_host *host, u32 ocr)
 	/* Set initial state and call mmc_set_ios */
 	mmc_set_initial_state(host);
 
-	/* Try to set signal voltage to 3.3V but fall back to 1.8v or 1.2v */
-	if (!mmc_set_signal_voltage(host, MMC_SIGNAL_VOLTAGE_330))
-		dev_dbg(mmc_dev(host), "Initial signal voltage of 3.3v\n");
-	else if (!mmc_set_signal_voltage(host, MMC_SIGNAL_VOLTAGE_180))
-		dev_dbg(mmc_dev(host), "Initial signal voltage of 1.8v\n");
-	else if (!mmc_set_signal_voltage(host, MMC_SIGNAL_VOLTAGE_120))
-		dev_dbg(mmc_dev(host), "Initial signal voltage of 1.2v\n");
+	/* /\* Try to set signal voltage to 3.3V but fall back to 1.8v or 1.2v *\/ */
+	/* if (!mmc_set_signal_voltage(host, MMC_SIGNAL_VOLTAGE_330)) */
+	/* 	dev_dbg(mmc_dev(host), "Initial signal voltage of 3.3v\n"); */
+	/* else if (!mmc_set_signal_voltage(host, MMC_SIGNAL_VOLTAGE_180)) */
+	/* 	dev_dbg(mmc_dev(host), "Initial signal voltage of 1.8v\n"); */
+	/* else if (!mmc_set_signal_voltage(host, MMC_SIGNAL_VOLTAGE_120)) */
+	/* 	dev_dbg(mmc_dev(host), "Initial signal voltage of 1.2v\n"); */
 
 	/*
 	 * This delay should be sufficient to allow the power supply
 	 * to reach the minimum voltage.
 	 */
-	mmc_delay(10);
+	/* mmc_delay(10); */
 
 	mmc_pwrseq_post_power_on(host);
 
@@ -1661,7 +1661,7 @@ void mmc_power_up(struct mmc_host *host, u32 ocr)
 	 * This delay must be at least 74 clock sizes, or 1 ms, or the
 	 * time required to reach a stable voltage.
 	 */
-	mmc_delay(10);
+	/* mmc_delay(10); */
 }
 
 void mmc_power_off(struct mmc_host *host)
