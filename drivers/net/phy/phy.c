@@ -38,6 +38,9 @@
 
 #include <asm/irq.h>
 
+#undef  HZ
+#define HZ 100
+
 #define PHY_STATE_STR(_state)			\
 	case PHY_##_state:			\
 		return __stringify(_state);	\

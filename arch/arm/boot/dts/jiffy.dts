@@ -434,6 +434,7 @@
     pinctrl-names = "default";
     pinctrl-0 = <&pinctrl_enet1>;
     phy-mode = "rmii";
+    // Comment pht-handle to use fixed config (not autoneg)
     phy-handle = <&ethphy0>;
     phy-reset-gpios = <&gpio1 22 1>;
     phy-reset-duration = <10>;
@@ -449,6 +450,10 @@
               status = "okay";
             };
     };
+//    fixed-link {
+//        full-duplex;
+//        speed = <100>;
+//    };
 };
 
 &uart2 {
