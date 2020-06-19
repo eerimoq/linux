@@ -30,6 +30,9 @@
 #include <linux/uaccess.h>
 #include <linux/atomic.h>
 
+#undef  HZ
+#define HZ 100
+
 #define PHY_STATE_TIME	HZ
 
 #define PHY_STATE_STR(_state)			\

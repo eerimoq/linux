@@ -145,10 +145,10 @@ int mmc_go_idle(struct mmc_host *host)
 	 * rules that must accommodate non-MMC slaves which this layer
 	 * won't even know about.
 	 */
-	if (!mmc_host_is_spi(host)) {
-		mmc_set_chip_select(host, MMC_CS_HIGH);
-		mmc_delay(1);
-	}
+	/* if (!mmc_host_is_spi(host)) { */
+	/* 	mmc_set_chip_select(host, MMC_CS_HIGH); */
+	/* 	mmc_delay(1); */
+	/* } */
 
 	cmd.opcode = MMC_GO_IDLE_STATE;
 	cmd.arg = 0;
@@ -156,12 +156,12 @@ int mmc_go_idle(struct mmc_host *host)
 
 	err = mmc_wait_for_cmd(host, &cmd, 0);
 
-	mmc_delay(1);
+	/* mmc_delay(1); */
 
-	if (!mmc_host_is_spi(host)) {
-		mmc_set_chip_select(host, MMC_CS_DONTCARE);
-		mmc_delay(1);
-	}
+	/* if (!mmc_host_is_spi(host)) { */
+	/* 	mmc_set_chip_select(host, MMC_CS_DONTCARE); */
+	/* 	mmc_delay(1); */
+	/* } */
 
 	host->use_spi_crc = 0;
 
@@ -177,7 +177,7 @@ int mmc_send_op_cond(struct mmc_host *host, u32 ocr, u32 *rocr)
 	cmd.arg = mmc_host_is_spi(host) ? 0 : ocr;
 	cmd.flags = MMC_RSP_SPI_R1 | MMC_RSP_R3 | MMC_CMD_BCR;
 
-	for (i = 100; i; i--) {
+	for (i =500; i; i--) {
 		err = mmc_wait_for_cmd(host, &cmd, 0);
 		if (err)
 			break;
@@ -193,7 +193,7 @@ int mmc_send_op_cond(struct mmc_host *host, u32 ocr, u32 *rocr)
 
 		err = -ETIMEDOUT;
 
-		mmc_delay(10);
+		mmc_delay(2);
 
 		/*
 		 * According to eMMC specification v5.1 section 6.4.3, we

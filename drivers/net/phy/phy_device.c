@@ -1062,7 +1062,7 @@ static int phy_poll_reset(struct phy_device *phydev)
 	int ret, val;
 
 	ret = phy_read_poll_timeout(phydev, MII_BMCR, val, !(val & BMCR_RESET),
-				    50000, 600000, true);
+				    5000, 600000, true);
 	if (ret)
 		return ret;
 	/* Some chips (smsc911x) may still need up to another 1ms after the

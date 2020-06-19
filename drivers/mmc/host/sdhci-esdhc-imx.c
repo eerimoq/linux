@@ -801,7 +801,7 @@ static unsigned int esdhc_pltfm_get_min_clock(struct sdhci_host *host)
 {
 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
 
-	return pltfm_host->clock / 256 / 16;
+	return 52000000; //pltfm_host->clock / 256 / 16;
 }
 
 static inline void esdhc_pltfm_set_clock(struct sdhci_host *host,
@@ -1655,6 +1655,9 @@ static int sdhci_esdhc_imx_probe(struct platform_device *pdev)
 
 	host->tuning_delay = 1;
 
+        /* ToDo: Move to where? */
+        host->mmc->caps2 |= MMC_CAP2_NO_PRESCAN_POWERUP;
+
 	sdhci_esdhc_imx_hwinit(host);
 
 	err = sdhci_add_host(host);
@@ -1853,13 +1856,51 @@ static struct platform_driver sdhci_esdhc_imx_driver = {
 		.name	= "sdhci-esdhc-imx",
 		.of_match_table = imx_esdhc_dt_ids,
 		.pm	= &sdhci_esdhc_pmops,
+                .probe_type = PROBE_PREFER_ASYNCHRONOUS,
+
 	},
 	.id_table	= imx_esdhc_devtype,
 	.probe		= sdhci_esdhc_imx_probe,
 	.remove		= sdhci_esdhc_imx_remove,
 };
 
-module_platform_driver(sdhci_esdhc_imx_driver);
+/* #define core_initcall(fn)           __define_initcall(fn, 1) */
+/* #define core_initcall_sync(fn)              __define_initcall(fn, 1s) */
+/* #define postcore_initcall(fn)               __define_initcall(fn, 2) */
+/* #define postcore_initcall_sync(fn)  __define_initcall(fn, 2s) */
+/* #define arch_initcall(fn)           __define_initcall(fn, 3) */
+/* #define arch_initcall_sync(fn)              __define_initcall(fn, 3s) */
+/* #define subsys_initcall(fn)         __define_initcall(fn, 4) */
+/* #define subsys_initcall_sync(fn)    __define_initcall(fn, 4s) */
+/* #define fs_initcall(fn)                     __define_initcall(fn, 5) */
+/* #define fs_initcall_sync(fn)                __define_initcall(fn, 5s) */
+/* #define rootfs_initcall(fn)         __define_initcall(fn, rootfs) */
+/* #define device_initcall(fn)         __define_initcall(fn, 6) */
+/* #define device_initcall_sync(fn)    __define_initcall(fn, 6s) */
+/* #define late_initcall(fn)           __define_initcall(fn, 7) */
+/* #define late_initcall_sync(fn)              __define_initcall(fn, 7s) */
+
+#define my___initcall(fn) fs_initcall(fn)
+
+#define my_module_init(x)      my___initcall(x);
+
+#define my_module_driver(__driver, __register, __unregister, ...) \
+static int __init __driver##_init(void) \
+{ \
+       return __register(&(__driver) , ##__VA_ARGS__); \
+} \
+my_module_init(__driver##_init); \
+static void __exit __driver##_exit(void) \
+{ \
+       __unregister(&(__driver) , ##__VA_ARGS__); \
+} \
+module_exit(__driver##_exit);
+
+#define my_module_platform_driver(__platform_driver) \
+       my_module_driver(__platform_driver, platform_driver_register, \
+                       platform_driver_unregister)
+
+my_module_platform_driver(sdhci_esdhc_imx_driver);
 
 MODULE_DESCRIPTION("SDHCI driver for Freescale i.MX eSDHC");
 MODULE_AUTHOR("Wolfram Sang <kernel@pengutronix.de>");
