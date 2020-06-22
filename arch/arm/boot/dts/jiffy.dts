@@ -407,6 +407,11 @@
                 #address-cells = <1>;
                 #size-cells = <0>;
         };
+
+        onewire {
+                compatible = "w1-gpio";
+                gpios = <&gpio1 4 0>;
+        };
 };
 
 &clks {
