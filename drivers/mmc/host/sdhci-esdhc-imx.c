@@ -799,7 +799,7 @@ static unsigned int esdhc_pltfm_get_max_clock(struct sdhci_host *host)
 
 static unsigned int esdhc_pltfm_get_min_clock(struct sdhci_host *host)
 {
-	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+	/* struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host); */
 
 	return 52000000; //pltfm_host->clock / 256 / 16;
 }

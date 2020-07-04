@@ -685,4 +685,4 @@ done:
 	flush_delayed_fput();
 	return 0;
 }
-late_initcall(populate_rootfs);
+rootfs_initcall(populate_rootfs);
