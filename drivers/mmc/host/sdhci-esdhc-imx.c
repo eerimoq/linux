@@ -1864,43 +1864,29 @@ static struct platform_driver sdhci_esdhc_imx_driver = {
 	.remove		= sdhci_esdhc_imx_remove,
 };
 
-/* #define core_initcall(fn)           __define_initcall(fn, 1) */
-/* #define core_initcall_sync(fn)              __define_initcall(fn, 1s) */
-/* #define postcore_initcall(fn)               __define_initcall(fn, 2) */
-/* #define postcore_initcall_sync(fn)  __define_initcall(fn, 2s) */
-/* #define arch_initcall(fn)           __define_initcall(fn, 3) */
-/* #define arch_initcall_sync(fn)              __define_initcall(fn, 3s) */
-/* #define subsys_initcall(fn)         __define_initcall(fn, 4) */
-/* #define subsys_initcall_sync(fn)    __define_initcall(fn, 4s) */
-/* #define fs_initcall(fn)                     __define_initcall(fn, 5) */
-/* #define fs_initcall_sync(fn)                __define_initcall(fn, 5s) */
-/* #define rootfs_initcall(fn)         __define_initcall(fn, rootfs) */
-/* #define device_initcall(fn)         __define_initcall(fn, 6) */
-/* #define device_initcall_sync(fn)    __define_initcall(fn, 6s) */
-/* #define late_initcall(fn)           __define_initcall(fn, 7) */
-/* #define late_initcall_sync(fn)              __define_initcall(fn, 7s) */
+module_platform_driver(sdhci_esdhc_imx_driver);
 
-#define my___initcall(fn) fs_initcall(fn)
+/* #define my___initcall(fn) fs_initcall(fn) */
 
-#define my_module_init(x)      my___initcall(x);
+/* #define my_module_init(x)      my___initcall(x); */
 
-#define my_module_driver(__driver, __register, __unregister, ...) \
-static int __init __driver##_init(void) \
-{ \
-       return __register(&(__driver) , ##__VA_ARGS__); \
-} \
-my_module_init(__driver##_init); \
-static void __exit __driver##_exit(void) \
-{ \
-       __unregister(&(__driver) , ##__VA_ARGS__); \
-} \
-module_exit(__driver##_exit);
+/* #define my_module_driver(__driver, __register, __unregister, ...) \ */
+/* static int __init __driver##_init(void) \ */
+/* { \ */
+/*        return __register(&(__driver) , ##__VA_ARGS__); \ */
+/* } \ */
+/* my_module_init(__driver##_init); \ */
+/* static void __exit __driver##_exit(void) \ */
+/* { \ */
+/*        __unregister(&(__driver) , ##__VA_ARGS__); \ */
+/* } \ */
+/* module_exit(__driver##_exit); */
 
-#define my_module_platform_driver(__platform_driver) \
-       my_module_driver(__platform_driver, platform_driver_register, \
-                       platform_driver_unregister)
+/* #define my_module_platform_driver(__platform_driver) \ */
+/*        my_module_driver(__platform_driver, platform_driver_register, \ */
+/*                        platform_driver_unregister) */
 
-my_module_platform_driver(sdhci_esdhc_imx_driver);
+/* my_module_platform_driver(sdhci_esdhc_imx_driver); */
 
 MODULE_DESCRIPTION("SDHCI driver for Freescale i.MX eSDHC");
 MODULE_AUTHOR("Wolfram Sang <kernel@pengutronix.de>");
