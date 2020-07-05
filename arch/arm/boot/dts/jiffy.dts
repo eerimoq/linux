@@ -11,15 +11,15 @@
         compatible = "fsl,imx6ul-14x14-evk", "fsl,imx6ul";
 
         chosen {
-        bootargs = "console=ttymxc1,115200 ";
-        linux,initrd-start = <0x00000000>;
-        linux,initrd-end = <0x00000000>;
-        stdout-path = &uart2;
+                bootargs = "console=ttymxc1,115200 ";
+                linux,initrd-start = <0x00000000>;
+                linux,initrd-end = <0x00000000>;
+                stdout-path = &uart2;
         };
 
         memory@80000000 {
 		device_type = "memory";
-                reg = <0x80000000 0x40000000>;
+                reg = <0x80000000 0x8000000>;
         };
 
         regulators {
@@ -37,62 +37,12 @@
 };
 
 &adc1 {
-
-
         status = "okay";
 };
 
 &clks {
         assigned-clocks = <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;
         assigned-clock-rates = <786432000>;
-};
-
-//&cpu0 {
-//
-//        vcc-operating-points = <
-//                /* KHz  uV */
-//                696000  1400000
-//                528000  1300000
-//                396000  1300000
-//                198000  1300000
-//        >;
-//    clock-frequency = <528000000>;
-//        arm-supply = <&reg_arm>;
-//        soc-supply = <&reg_soc>;
-//        /* vcc-supply = <&reg_cpu>; */
-//};
-
-&i2c1 {
-        clock_frequency = <100000>;
-        pinctrl-names = "default";
-        pinctrl-0 = <&pinctrl_i2c1>;
-        status = "okay";
-};
-
-&i2c2 {
-        clock_frequency = <100000>;
-        pinctrl-names = "default";
-        pinctrl-0 = <&pinctrl_i2c2>;
-        status = "okay";
-
-/*    reg_cpu: regulator@48 {
-        compatible = "fcs,fan53555";
-        regulator-name = "fan53555";
-        reg = <0x48>;
-        regulator-min-microvolt = <900000>;
-        regulator-max-microvolt = <1450000>;
-        regulator-boot-on;
-        regulator-ramp-delay = <1000>;
-        regulator-always-on;
-    };
-*/
-};
-
-&i2c3 {
-	clock_frequency = <100000>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_i2c3>;
-	status = "okay";
 };
 
 &fec1 {
@@ -128,24 +78,6 @@
         pinctrl-0 = <&pinctrl_uart2>;
         status = "okay";
 };
-
-
-&uart3 {
-        pinctrl-names = "default";
-        pinctrl-0 = <&pinctrl_uart3>;
-        status = "okay";
-        uart-has-rtscts;
-};
-
-
-&uart4 {
-        pinctrl-names = "default";
-        pinctrl-0 = <&pinctrl_uart4>;
-        uart-has-rtscts;
-        status = "okay";
-};
-
-
 
 &usbotg1 {
         dr_mode = "host";
