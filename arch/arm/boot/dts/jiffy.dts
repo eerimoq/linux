@@ -4,7 +4,7 @@
 
 /dts-v1/;
 
-#include "imx6ul.dtsi"
+#include "imx6ul-jiffy.dtsi"
 
 / {
         model = "Jiffy";
@@ -74,17 +74,6 @@
         status = "okay";
 };
 
-&usbotg1 {
-        dr_mode = "host";
-        status = "okay";
-};
-
-&usbotg2 {
-        dr_mode = "host";
-        disable-over-current;
-        status = "okay";
-};
-
 &usdhc1 {
         pinctrl-names = "default";
         pinctrl-0 = <&pinctrl_usdhc1>;
@@ -92,6 +81,8 @@
         no-1-8-v;
         non-removable;
         keep-power-in-suspend;
+        no-sdio;
+        no-sd;
         status = "okay";
 };
 
@@ -117,72 +108,12 @@
                 >;
         };
 
-        pinctrl_enet2: enet2grp {
-                fsl,pins = <
-                        MX6UL_PAD_ENET2_RX_EN__ENET2_RX_EN	0x1b0b0
-                        MX6UL_PAD_ENET2_RX_ER__ENET2_RX_ER	0x1b0b0
-                        MX6UL_PAD_ENET2_RX_DATA0__ENET2_RDATA00	0x1b0b0
-                        MX6UL_PAD_ENET2_RX_DATA1__ENET2_RDATA01	0x1b0b0
-                        MX6UL_PAD_ENET2_TX_EN__ENET2_TX_EN	0x1b0b0
-                        MX6UL_PAD_ENET2_TX_DATA0__ENET2_TDATA00	0x1b0b0
-                        MX6UL_PAD_ENET2_TX_DATA1__ENET2_TDATA01	0x1b0b0
-                        MX6UL_PAD_ENET2_TX_CLK__ENET2_REF_CLK2	0x4001b031
-                >;
-        };
-
-        pinctrl_flexcan1: flexcan1grp{
-                fsl,pins = <
-                        MX6UL_PAD_LCD_DATA09__FLEXCAN1_RX	0x1b020
-                        MX6UL_PAD_LCD_DATA08__FLEXCAN1_TX	0x1b020
-                >;
-        };
-
-        pinctrl_i2c1: i2c1grp {
-                fsl,pins = <
-                        MX6UL_PAD_CSI_PIXCLK__I2C1_SCL 0x4001b8b0
-                        MX6UL_PAD_CSI_MCLK__I2C1_SDA 0x4001b8b0
-                >;
-        };
-
-        pinctrl_i2c2: i2c2grp {
-                fsl,pins = <
-                        MX6UL_PAD_CSI_VSYNC__I2C2_SDA 0x4001b8b1
-                        MX6UL_PAD_CSI_HSYNC__I2C2_SCL 0x4001b8b1
-                >;
-        };
-
-	pinctrl_i2c3: i2c3grp {
-		fsl,pins = <
-			MX6UL_PAD_UART1_TX_DATA__I2C3_SCL	0x4001b8b0
-			MX6UL_PAD_UART1_RX_DATA__I2C3_SDA	0x4001b8b0
-			>;
-	};
-
         pinctrl_uart2: uart2grp {
                 fsl,pins = <
                         MX6UL_PAD_UART2_TX_DATA__UART2_DCE_TX	0x1b0b1
                         MX6UL_PAD_UART2_RX_DATA__UART2_DCE_RX	0x1b0b1
                 >;
         };
-
-        pinctrl_uart3: uart3grp {
-                fsl,pins = <
-                        MX6UL_PAD_UART3_TX_DATA__UART3_DCE_TX 0x1b0b1
-                        MX6UL_PAD_UART3_RX_DATA__UART3_DCE_RX 0x1b0b1
-                        /*MX6UL_PAD_UART3_CTS_B__UART3_DCE_CTS 0x1b0b1 */
-                        MX6UL_PAD_UART3_CTS_B__GPIO1_IO26 0x170f9
-                >;
-        };
-
-        pinctrl_uart4: uart4grp {
-                fsl,pins = <
-                        MX6UL_PAD_UART4_TX_DATA__UART4_DCE_TX 0x1b0b1
-                        MX6UL_PAD_UART4_RX_DATA__UART4_DCE_RX 0x1b0b1
-                        MX6UL_PAD_LCD_VSYNC__UART4_DCE_RTS 0x1b0b1
-                        MX6UL_PAD_LCD_HSYNC__UART4_DCE_CTS 0x1b0b1
-                >;
-        };
-
 
         pinctrl_usdhc1: usdhc1grp {
                 fsl,pins = <
@@ -198,68 +129,4 @@
                         MX6UL_PAD_NAND_CLE__USDHC1_DATA7 0x170f9
                 >;
         };
-
-        pinctrl_ecspi1: ecspi1 {
-                fsl,pins = <
-                        MX6UL_PAD_LCD_DATA20__ECSPI1_SCLK 0x100b1
-                        MX6UL_PAD_LCD_DATA22__ECSPI1_MOSI 0x100b1
-                        MX6UL_PAD_LCD_DATA23__ECSPI1_MISO 0x100b1
-                        MX6UL_PAD_LCD_DATA21__GPIO3_IO26 0x80000000
-                        MX6UL_PAD_LCD_DATA05__GPIO3_IO10 0x80000000
-                >;
-        };
-
-        pinctrl_gpio: gpio_hog {
-                fsl,pins = <
-                        MX6UL_PAD_LCD_DATA11__GPIO3_IO16	0x17059 /* 5V_USB_EN */
-                        MX6UL_PAD_GPIO1_IO03__GPIO1_IO03	0x17059 /* IMX_5V_USB_EN */
-                        MX6UL_PAD_NAND_DATA00__GPIO4_IO02	0x17059 /* ZB_RESET_N */
-                        MX6UL_PAD_NAND_DATA01__GPIO4_IO03	0x17059 /* ZB_FIFO_H */
-                        MX6UL_PAD_NAND_DATA02__GPIO4_IO04	0x17059 /* ZB_FIFO_L */
-                        MX6UL_PAD_NAND_DATA03__GPIO4_IO05	0x17059 /* ZB_CCA */
-                        MX6UL_PAD_NAND_DATA04__GPIO4_IO06	0x17059 /* ZB_SFD */
-                        MX6UL_PAD_NAND_DATA05__GPIO4_IO07	0x17059 /* ZB_VREG_EN */
-                        MX6UL_PAD_CSI_DATA00__GPIO4_IO21	0x17059 /* CHR_EN */
-                        MX6UL_PAD_LCD_DATA12__GPIO3_IO17	0x17059 /* AUX_5V_EN*/
-                        MX6UL_PAD_LCD_DATA13__GPIO3_IO18	0x17059 /* USB_5V_FAULT_N */
-                        MX6UL_PAD_LCD_DATA14__GPIO3_IO19	0x17059 /* AUX_5V_FAULT_N */
-                        MX6UL_PAD_CSI_DATA04__GPIO4_IO25	0x17059 /* P5V_MEAS */
-                        MX6UL_PAD_NAND_DATA07__GPIO4_IO09	0x17059 /* CAN_STB */
-                >;
-        };
-
-
-        pinctrl_unused: gpio_hog_unused {
-                fsl,pins = <
-                        MX6UL_PAD_GPIO1_IO05__GPIO1_IO05	0x17059
-                        MX6UL_PAD_NAND_DATA06__GPIO4_IO08	0x17059
-                        MX6UL_PAD_NAND_DQS__GPIO4_IO16		0x17059
-                        MX6UL_PAD_NAND_ALE__GPIO4_IO10		0x17059
-                        MX6UL_PAD_NAND_RE_B__GPIO4_IO00		0x17059
-                        MX6UL_PAD_SNVS_TAMPER1__GPIO5_IO01	0x17059
-                        MX6UL_PAD_SNVS_TAMPER2__GPIO5_IO02	0x17059
-                        MX6UL_PAD_SNVS_TAMPER3__GPIO5_IO03	0x17059
-                        MX6UL_PAD_SNVS_TAMPER4__GPIO5_IO04	0x17059
-                        MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05	0x17059
-                        MX6UL_PAD_SNVS_TAMPER6__GPIO5_IO06	0x17059
-                        MX6UL_PAD_SNVS_TAMPER7__GPIO5_IO07	0x17059
-                        MX6UL_PAD_SNVS_TAMPER8__GPIO5_IO08	0x17059
-                        MX6UL_PAD_SNVS_TAMPER9__GPIO5_IO09	0x17059
-
-                        MX6UL_PAD_UART2_RTS_B__GPIO1_IO23	0x17059
-                        MX6UL_PAD_CSI_DATA07__GPIO4_IO28	0x17059
-                        MX6UL_PAD_UART5_RX_DATA__GPIO1_IO31	0x17059
-                        MX6UL_PAD_UART3_RTS_B__GPIO1_IO27	0x17059
-                        MX6UL_PAD_LCD_DATA15__GPIO3_IO20	0x17059
-                        MX6UL_PAD_LCD_DATA16__GPIO3_IO21	0x17059
-                        MX6UL_PAD_LCD_DATA17__GPIO3_IO22	0x17059
-                        MX6UL_PAD_LCD_DATA18__GPIO3_IO23	0x17059
-                        MX6UL_PAD_LCD_DATA19__GPIO3_IO24	0x17059
-                        MX6UL_PAD_LCD_CLK__GPIO3_IO00		0x17059
-                        MX6UL_PAD_LCD_ENABLE__GPIO3_IO01	0x17059
-                        MX6UL_PAD_LCD_RESET__GPIO3_IO04		0x17059
-
-                        >;
-        };
-
 };
